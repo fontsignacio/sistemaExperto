@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Evaluación Psicoemocional - Paso a Paso</title>
-    <link rel="stylesheet" href="estilos.css">
+    <link rel="stylesheet" href="styles/styles.css">
 </head>
 
 <body>
@@ -129,7 +129,20 @@
         </div>
     </div>
 
-    <script src="logica.js"></script>
+    <script type="module" src="js/core/factBase.js"></script>
+    <script type="module" src="js/core/knowledgeBase.js"></script>
+    <script type="module" src="js/core/inferenceEngine.js"></script>
+    <script type="module" src="js/utils/validators.js"></script>
+    <script type="module" src="js/ui/progressBar.js"></script>
+    <script type="module" src="js/ui/stepNavigator.js"></script>
+    <script type="module" src="js/ui/uiController.js"></script>
+
+    <!-- bootstrap del sistema experto -->
+    <script type="module">
+        import { UIController } from './js/ui/uiController.js';
+        // crea y arranca la navegación paso a paso + motor de inferencia
+        new UIController();
+    </script>
 </body>
 
 </html>
