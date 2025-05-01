@@ -1,5 +1,5 @@
 import { createProgressBar, updateProgressBar } from './progressBar.js';
-import { showStep, attachNextButtons } from './stepNavigator.js';
+import { showStep, attachNextButtons, attachBackButtons } from './stepNavigator.js';
 import { validateStep } from '../utils/validators.js';
 import { FactBase } from '../core/factBase.js';
 import { KnowledgeBase } from '../core/knowledgeBase.js';
@@ -22,12 +22,12 @@ export class UIController {
         updateProgressBar(this.progressBar, this.currentStep);
 
         // eventos de navegación
-        attachNextButtons(this.steps, '.next-btn', idx => this.nextStep(idx));
-        document.getElementById('evaluar-btn')
-            .addEventListener('click', () => this.evaluate());
+        attachNextButtons(this.steps, '.next-btn', idx => this.step(idx, true));
+        attachBackButtons(this.steps, '.back-btn', idx => this.step(idx));
+        document.getElementById('evaluar-btn').addEventListener('click', () => this.evaluate());
     }
 
-    nextStep(idx) {
+    step(idx, next = false) {
         const step = this.steps[idx];
         if (!validateStep(step)) return;
 
@@ -35,7 +35,12 @@ export class UIController {
         const req = step.querySelector('input[required]');
         this.factBase.setFact(req.name, step.querySelector(`input[name="${req.name}"]:checked`).value);
 
-        this.currentStep++;
+        next? this.currentStep++ : this.currentStep--;
+        showStep(this.steps, this.currentStep);
+        updateProgressBar(this.progressBar, this.currentStep);
+    }
+
+    updateStep() {
         showStep(this.steps, this.currentStep);
         updateProgressBar(this.progressBar, this.currentStep);
     }

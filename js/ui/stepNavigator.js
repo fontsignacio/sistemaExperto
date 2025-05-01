@@ -21,3 +21,18 @@ export function attachNextButtons(steps, nextBtnSelector, onNext) {
         }
     });
 }
+
+/**
+ * Añade manejadores a los botones “Atrás” de cada paso
+ * @param {HTMLSectionElement[]} steps
+ * @param {string} backBtnSelector       Selector para los botones back (e.g. '.back-btn')
+ * @param {(currentIndex: number) => void} onBack   Callback al retroceder de paso
+ */
+export function attachBackButtons(steps, backBtnSelector, onBack) {
+    steps.forEach((step, idx) => {
+        const btn = step.querySelector(backBtnSelector);
+        if (btn) {
+            btn.addEventListener('click', () => onBack(idx));
+        }
+    });
+}
