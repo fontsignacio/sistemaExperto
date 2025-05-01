@@ -29,15 +29,28 @@ export class UIController {
 
     step(idx, next = false) {
         const step = this.steps[idx];
-        if (!validateStep(step)) return;
-
-        // guardar hecho
-        const req = step.querySelector('input[required]');
-        this.factBase.setFact(req.name, step.querySelector(`input[name="${req.name}"]:checked`).value);
-
-        next? this.currentStep++ : this.currentStep--;
+        if (next && !validateStep(step)) return;
+    
+        // Guardar hecho
+        if (next) {
+            const req = step.querySelector('input[required]');
+            this.factBase.setFact(req.name, step.querySelector(`input[name="${req.name}"]:checked`).value);
+        }
+    
+        // Actualizar el índice del paso actual
+        next ? this.currentStep++ : this.currentStep--;
+    
+        // Mostrar el paso actual y actualizar la barra de progreso
         showStep(this.steps, this.currentStep);
         updateProgressBar(this.progressBar, this.currentStep);
+    
+        // Habilitar o deshabilitar el botón "Atrás"
+        const backButton = this.steps[this.currentStep].querySelector('.back-btn');
+        if (this.currentStep === 0) {
+            backButton.disabled = true; // Deshabilitar si estamos en el primer paso
+        } else {
+            backButton.disabled = false; // Habilitar en otros pasos
+        }
     }
 
     updateStep() {
