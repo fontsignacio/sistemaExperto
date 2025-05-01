@@ -104,17 +104,60 @@ button:hover {
 }
 
 
-.estado-estable, .fatiga-leve, .burnout-bajo {
+/* Colores principales */
+.estado-estable, .fatiga-bajo, .burnout-bajo, .optimismo-elevado, .resiliencia-alta {
     color: green;
     font-weight: bold;
 }
 
-.estado-vulnerable, .fatiga-moderada, .burnout-medio {
+.estado-vulnerable, .fatiga-moderada, .burnout-medio, .ansiedad-moderada, .burnout-potencial {
     color: orange;
     font-weight: bold;
 }
 
-.estado-inestable, .fatiga-severa, .burnout-alto {
+.estado-inestable, .fatiga-severa, .burnout-alto, .estres-agudo, .depresion-alta {
     color: red;
+    font-weight: bold;
+}
+
+.estado-cansado {
+    color: #FF8C00; /* Dark Orange */
+    font-weight: bold;
+}
+
+.estado-optimista, .estado-relajado {
+    color: #32CD32; /* Lime Green */
+    font-weight: bold;
+}
+
+.estado-depresivo, .estado-inseguro {
+    color: #8B0000; /* Dark Red */
+    font-weight: bold;
+}
+
+.estado-estresado {
+    color: #FF4500; /* Orange Red */
+    font-weight: bold;
+}
+
+/* Colores neutrales para casos menos intensos */
+.estado-relajado, .recuperacion-exitosa {
+    color: #228B22; /* Forest Green */
+    font-weight: bold;
+}
+
+.estado-extremadamente-estresado {
+    color: #B22222; /* Firebrick */
+    font-weight: bold;
+}
+
+/* Clases para cada categoría */
+.burnout-nulo, .fatiga-nula {
+    color: #00FF7F; /* Spring Green */
+    font-weight: bold;
+}
+
+.burnout-leve, .fatiga-leve {
+    color: #ADFF2F; /* Green Yellow */
     font-weight: bold;
 }
