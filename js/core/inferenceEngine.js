@@ -1,11 +1,13 @@
+import { EstadoEmocional, NivelFatiga, RiesgoBurnout } from "../enums/resultEnum.js";
+
 export class InferenceEngine {
     constructor(knowledgeBase, factBase) {
         this.kb = knowledgeBase;
         this.fb = factBase;
         this.result = {
-            estadoEmocional: 'Estable',
-            nivelFatiga: 'Leve',
-            riesgoBurnout: 'Bajo'
+            estadoEmocional: EstadoEmocional.FELIZ,
+            nivelFatiga: NivelFatiga.LEVE,
+            riesgoBurnout: RiesgoBurnout.LEVE
         };
     }
 
@@ -14,6 +16,7 @@ export class InferenceEngine {
         for (const rule of this.kb.rules) {
             if (rule.conditions(facts)) {
                 rule.actions(this.result);
+                if (rule.stop) break;
             }
         }
         return this.result;

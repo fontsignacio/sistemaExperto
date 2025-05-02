@@ -1,191 +1,101 @@
+import { EstadoEmocional, NivelFatiga, RiesgoBurnout } from '../enums/resultEnum.js';
+
 export class KnowledgeBase {
     constructor() {
         this.rules = [
+            // 1) Caso más desfavorable: detiene la inferencia
             {
-                name: 'Burnout Alto',
+                name: 'Burnout Máximo',
                 conditions: facts =>
                     facts.concentracion === 'mucho_menos' &&
-                    facts.confianza === 'muy_baja' &&
-                    facts.felicidad === 'nada' &&
-                    facts.disfrute_actividades === 'nada',
-                actions: result => {
-                    result.estadoEmocional = 'Inestable';
-                    result.nivelFatiga = 'Severo';
-                    result.riesgoBurnout = 'Alto';
-                }
-            },
-            {
-                name: 'Burnout Medio',
-                conditions: facts =>
-                    facts.concentracion === 'menos' &&
-                    ['rara_vez', 'nunca'].includes(facts.enfrentar_problemas) &&
-                    facts.autoestima === 'baja',
-                actions: result => {
-                    result.estadoEmocional = 'Vulnerable';
-                    result.nivelFatiga = 'Moderado';
-                    result.riesgoBurnout = 'Medio';
-                }
-            },
-            {
-                name: 'Fatiga Severa',
-                conditions: facts =>
                     facts.sueno_perdido === 'severo' &&
+                    facts.sentido_utilidad === 'nada' &&
+                    facts.capacidad_decidir === 'nula' &&
                     facts.agobio_tension === 'alto' &&
-                    facts.superar_dificultades === 'nunca',
+                    facts.dificultades === 'si' &&
+                    facts.disfrute_actividades === 'nada' &&
+                    facts.enfrentar_problemas === 'nunca' &&
+                    facts.depresion === 'severo' &&
+                    facts.desconfianza === 'alta' &&
+                    facts.baja_autoestima === 'alta' &&
+                    facts.felicidad === 'nada',
                 actions: result => {
-                    result.estadoEmocional = 'Inestable';
-                    result.nivelFatiga = 'Severo';
-                }
+                    result.estadoEmocional = EstadoEmocional.DEPRESIVO;
+                    result.nivelFatiga = NivelFatiga.SEVERO;
+                    result.riesgoBurnout = RiesgoBurnout.ALTO;
+                },
+                stop: true    // marca para detener inferencia
+            },
+
+            // 2) Fatiga: Severo, Alto, Moderado, Bajo, Leve
+            {
+                name: 'Fatiga Severo',
+                conditions: facts => facts.sueno_perdido === 'severo' || facts.agobio_tension === 'alto',
+                actions: result => { result.nivelFatiga = NivelFatiga.SEVERO; }
             },
             {
-                name: 'Estable',
-                conditions: facts =>
-                    ['si', 'algo'].includes(facts.felicidad) &&
-                    ['alta', 'media'].includes(facts.confianza) &&
-                    ['mucho', 'algo'].includes(facts.disfrute_actividades) &&
-                    ['no', 'leve'].includes(facts.depresion),
-                actions: result => {
-                    result.estadoEmocional = 'Estable';
-                    result.nivelFatiga = 'Leve';
-                    result.riesgoBurnout = 'Bajo';
-                }
+                name: 'Fatiga Alto',
+                conditions: facts => facts.sueno_perdido === 'moderado' || facts.agobio_tension === 'moderado',
+                actions: result => { result.nivelFatiga = NivelFatiga.ALTO; }
             },
             {
-                name: 'Vulnerable',
-                conditions: facts =>
-                    ['moderado', 'severo'].includes(facts.depresion) &&
-                    ['baja', 'nula'].includes(facts.autoestima),
-                actions: result => {
-                    result.estadoEmocional = 'Vulnerable';
-                }
+                name: 'Fatiga Bajo',
+                conditions: facts => facts.sueno_perdido === 'leve' && facts.agobio_tension === 'leve',
+                actions: result => { result.nivelFatiga = NivelFatiga.BAJO; }
+            },
+            {
+                name: 'Fatiga Leve',
+                conditions: facts => facts.sueno_perdido === 'no' && facts.agobio_tension === 'no',
+                actions: result => { result.nivelFatiga = NivelFatiga.LEVE; }
+            },
+
+            // 3) Riesgo burnout según dificultades
+            {
+                name: 'Burnout Alto',
+                conditions: facts => facts.dificultades === 'si',
+                actions: result => { result.riesgoBurnout = RiesgoBurnout.ALTO; }
+            },
+            {
+                name: 'Burnout Moderado',
+                conditions: facts => facts.dificultades === 'frecuentemente',
+                actions: result => { result.riesgoBurnout = RiesgoBurnout.MODERADO; }
+            },
+            {
+                name: 'Burnout Bajo',
+                conditions: facts => facts.dificultades === 'a_veces',
+                actions: result => { result.riesgoBurnout = RiesgoBurnout.BAJO; }
             },
             {
                 name: 'Burnout Leve',
-                conditions: facts =>
-                    facts.concentracion === 'algo_menos' &&
-                    facts.disfrute_actividades === 'algo' &&
-                    facts.autoestima === 'media',
-                actions: result => {
-                    result.estadoEmocional = 'Levemente Vulnerable';
-                    result.nivelFatiga = 'Leve';
-                    result.riesgoBurnout = 'Leve';
-                }
+                conditions: facts => facts.dificultades === 'nunca',
+                actions: result => { result.riesgoBurnout = RiesgoBurnout.LEVE; }
+            },
+
+            // 4) Estado emocional según combinaciones
+            {
+                name: 'Estado Depresivo',
+                conditions: facts => facts.depresion === 'severo' || facts.sentido_utilidad === 'nada',
+                actions: result => { result.estadoEmocional = EstadoEmocional.DEPRESIVO; }
             },
             {
-                name: 'Estrés Crónico',
-                conditions: facts =>
-                    facts.agobio_tension === 'alto' &&
-                    facts.superar_dificultades === 'rara_vez' &&
-                    facts.depresion === 'moderado',
-                actions: result => {
-                    result.estadoEmocional = 'Estresado';
-                    result.nivelFatiga = 'Alto';
-                }
+                name: 'Estado Triste',
+                conditions: facts => facts.depresion === 'moderado' || facts.disfrute_actividades === 'poco',
+                actions: result => { result.estadoEmocional = EstadoEmocional.TRISTE; }
             },
             {
-                name: 'Resiliencia Alta',
-                conditions: facts =>
-                    facts.enfrentar_problemas === 'siempre' &&
-                    facts.autoestima === 'alta' &&
-                    facts.confianza === 'alta',
-                actions: result => {
-                    result.estadoEmocional = 'Resiliente';
-                    result.nivelFatiga = 'Bajo';
-                    result.riesgoBurnout = 'Nulo';
-                }
+                name: 'Estado Enojado',
+                conditions: facts => facts.agobio_tension === 'alto' && facts.enfrentar_problemas === 'nunca',
+                actions: result => { result.estadoEmocional = EstadoEmocional.ENOJADO; }
             },
             {
-                name: 'Depresión Alta',
-                conditions: facts =>
-                    facts.depresion === 'severo' &&
-                    facts.disfrute_actividades === 'nada' &&
-                    facts.felicidad === 'nada',
-                actions: result => {
-                    result.estadoEmocional = 'Depresivo';
-                    result.nivelFatiga = 'Severo';
-                }
+                name: 'Estado Miedoso',
+                conditions: facts => facts.agobio_tension === 'moderado' && facts.desconfianza === 'baja',
+                actions: result => { result.estadoEmocional = EstadoEmocional.MIEDOSO; }
             },
             {
-                name: 'Fatiga Moderada',
-                conditions: facts =>
-                    facts.sueno_perdido === 'moderado' &&
-                    facts.agobio_tension === 'moderado',
-                actions: result => {
-                    result.estadoEmocional = 'Cansado';
-                    result.nivelFatiga = 'Moderado';
-                }
-            },
-            {
-                name: 'Optimismo Elevado',
-                conditions: facts =>
-                    facts.felicidad === 'si' &&
-                    facts.confianza === 'alta' &&
-                    facts.disfrute_actividades === 'mucho',
-                actions: result => {
-                    result.estadoEmocional = 'Optimista';
-                    result.nivelFatiga = 'Bajo';
-                    result.riesgoBurnout = 'Nulo';
-                }
-            },
-            {
-                name: 'Ansiedad Moderada',
-                conditions: facts =>
-                    facts.agobio_tension === 'moderado' &&
-                    facts.confianza === 'baja',
-                actions: result => {
-                    result.estadoEmocional = 'Ansioso';
-                }
-            },
-            {
-                name: 'Burnout Potencial',
-                conditions: facts =>
-                    facts.concentracion === 'algo_menos' &&
-                    facts.autoestima === 'baja' &&
-                    facts.enfrentar_problemas === 'rara_vez',
-                actions: result => {
-                    result.estadoEmocional = 'Vulnerable';
-                    result.riesgoBurnout = 'Potencial';
-                }
-            },
-            {
-                name: 'Recuperación Exitosa',
-                conditions: facts =>
-                    facts.sueno_perdido === 'no' &&
-                    facts.agobio_tension === 'bajo' &&
-                    facts.superar_dificultades === 'siempre',
-                actions: result => {
-                    result.estadoEmocional = 'Estable';
-                    result.nivelFatiga = 'Nulo';
-                }
-            },
-            {
-                name: 'Fatiga Baja',
-                conditions: facts =>
-                    facts.sueno_perdido === 'leve' &&
-                    facts.agobio_tension === 'leve',
-                actions: result => {
-                    result.estadoEmocional = 'Relajado';
-                    result.nivelFatiga = 'Bajo';
-                }
-            },
-            {
-                name: 'Autoestima Comprometida',
-                conditions: facts =>
-                    facts.autoestima === 'baja' &&
-                    facts.confianza === 'muy_baja',
-                actions: result => {
-                    result.estadoEmocional = 'Inseguro';
-                }
-            },
-            {
-                name: 'Estrés Agudo',
-                conditions: facts =>
-                    facts.agobio_tension === 'severo' &&
-                    facts.enfrentar_problemas === 'nunca',
-                actions: result => {
-                    result.estadoEmocional = 'Extremadamente Estresado';
-                    result.nivelFatiga = 'Severo';
-                }
+                name: 'Estado Feliz',
+                conditions: facts => ['si', 'algo'].includes(facts.felicidad) && ['muy_baja', 'media'].includes(facts.desconfianza),
+                actions: result => { result.estadoEmocional = EstadoEmocional.FELIZ; }
             }
         ];
     }

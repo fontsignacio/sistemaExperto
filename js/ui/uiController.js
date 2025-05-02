@@ -72,7 +72,7 @@ export class UIController {
         // mostrar resultados
         document.getElementById('estadoSalida').textContent = `Estado emocional general: ${estadoEmocional}`; 
         document.getElementById('fatigaSalida').textContent = `Nivel de fatiga mental: ${nivelFatiga}`; 
-        document.getElementById('burnoutSalida').textContent = `Riesgo de burnout académico: ${riesgoBurnout}`;
+        document.getElementById('burnoutSalida').textContent = `Riesgo de burnout: ${riesgoBurnout}`;
         document.getElementById('estadoSalida').className = `estado-${estadoEmocional.toLowerCase()}`;
         document.getElementById('fatigaSalida').className = `fatiga-${nivelFatiga.toLowerCase()}`;
         document.getElementById('burnoutSalida').className = `burnout-${riesgoBurnout.toLowerCase()}`;
