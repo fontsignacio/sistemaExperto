@@ -96,6 +96,62 @@ export class KnowledgeBase {
                 name: 'Estado Feliz',
                 conditions: facts => ['si', 'algo'].includes(facts.felicidad) && ['muy_baja', 'media'].includes(facts.desconfianza),
                 actions: result => { result.estadoEmocional = EstadoEmocional.FELIZ; }
+            },
+            {
+                name: 'Ansiedad Severa',
+                conditions: facts =>
+                    (['mucho_menos', 'menos'].includes(facts.concentracion) ? 1 : 0) +
+                    (['moderado', 'severo'].includes(facts.sueno_perdido) ? 1 : 0) +
+                    (['moderado', 'alto'].includes(facts.agobio_tension) ? 1 : 0) +
+                    (['rara_vez', 'nunca'].includes(facts.enfrentar_problemas) ? 1 : 0) >= 4,
+                actions: result => {
+                    result.estadoEmocional = EstadoEmocional.MIEDOSO;
+                    result.nivelFatiga = NivelFatiga.ALTO;
+                    result.riesgoBurnout = RiesgoBurnout.MODERADO;
+                }
+            },
+            {
+                name: 'Ansiedad Moderada',
+                conditions: facts =>
+                    (['mucho_menos', 'menos'].includes(facts.concentracion) ? 1 : 0) +
+                    (['moderado', 'severo'].includes(facts.sueno_perdido) ? 1 : 0) +
+                    (['moderado', 'alto'].includes(facts.agobio_tension) ? 1 : 0) +
+                    (['rara_vez', 'nunca'].includes(facts.enfrentar_problemas) ? 1 : 0) >= 2,
+                actions: result => {
+                    if (result.estadoEmocional !== EstadoEmocional.MIEDOSO) {
+                        result.estadoEmocional = EstadoEmocional.ESTRESADO;
+                    }
+                    if (result.nivelFatiga !== NivelFatiga.SEVERO) {
+                        result.nivelFatiga = NivelFatiga.MODERADO;
+                    }
+                }
+            },
+            {
+                name: 'Depresión Severa',
+                conditions: facts =>
+                    (['moderado', 'severo'].includes(facts.depresion) ? 1 : 0) +
+                    (['poco', 'nada'].includes(facts.disfrute_actividades) ? 1 : 0) +
+                    (facts.sentido_utilidad === 'nada' ? 1 : 0) +
+                    (facts.capacidad_decidir === 'nula' ? 1 : 0) >= 3,
+                actions: result => {
+                    result.estadoEmocional = EstadoEmocional.DEPRESIVO;
+                    result.nivelFatiga = NivelFatiga.SEVERO;
+                    result.riesgoBurnout = RiesgoBurnout.ALTO;
+                }
+            },
+            {
+                name: 'Depresión Moderada',
+                conditions: facts =>
+                    (['moderado', 'severo'].includes(facts.depresion) ? 1 : 0) +
+                    (['poco', 'nada'].includes(facts.disfrute_actividades) ? 1 : 0) >= 2,
+                actions: result => {
+                    if (result.estadoEmocional !== EstadoEmocional.DEPRESIVO) {
+                        result.estadoEmocional = EstadoEmocional.TRISTE;
+                    }
+                    if (result.nivelFatiga !== NivelFatiga.SEVERO) {
+                        result.nivelFatiga = NivelFatiga.ALTO;
+                    }
+                }
             }
         ];
     }
