@@ -3,6 +3,30 @@ import { EstadoEmocional, NivelFatiga, RiesgoBurnout } from '../enums/resultEnum
 export class KnowledgeBase {
     constructor() {
         this.rules = [
+            // Regla RÁPIDA de resiliencia (detiene inferencia)
+            {
+                name: 'Resiliencia Detectada',
+                conditions: facts =>
+                    facts.concentracion === 'mejor' &&
+                    facts.sueno_perdido === 'no' &&
+                    facts.sentido_utilidad === 'mucho' &&
+                    facts.capacidad_decidir === 'alta' &&
+                    facts.agobio_tension === 'leve' &&
+                    facts.dificultades === 'nunca' &&
+                    facts.disfrute_actividades === 'mucho' &&
+                    facts.enfrentar_problemas === 'siempre' &&
+                    facts.depresion === 'no' &&
+                    facts.desconfianza === 'muy_baja' &&
+                    facts.baja_autoestima === 'nula' &&
+                    facts.felicidad === 'si',
+                actions: result => {
+                    result.estadoEmocional = EstadoEmocional.FELIZ;
+                    result.nivelFatiga = NivelFatiga.LEVE;
+                    result.riesgoBurnout = RiesgoBurnout.LEVE;
+                },
+                stop: true
+            },
+
             // 1) Caso más desfavorable: detiene la inferencia
             {
                 name: 'Burnout Máximo',
@@ -16,8 +40,8 @@ export class KnowledgeBase {
                     facts.disfrute_actividades === 'nada' &&
                     facts.enfrentar_problemas === 'nunca' &&
                     facts.depresion === 'severo' &&
-                    facts.desconfianza === 'muy_baja' &&
-                    facts.baja_autoestima === 'nula' &&
+                    facts.desconfianza === 'alta' &&
+                    facts.baja_autoestima === 'alta' &&
                     facts.felicidad === 'nada',
                 actions: result => {
                     result.estadoEmocional = EstadoEmocional.DEPRESIVO;
@@ -27,16 +51,11 @@ export class KnowledgeBase {
                 stop: true
             },
 
-            // 2–5) Fatiga
+            // 2–5) Fatiga: LEVE antes que BAJO
             {
-                name: 'Fatiga Severo',
-                conditions: facts => facts.sueno_perdido === 'severo' || facts.agobio_tension === 'alto',
-                actions: result => { result.nivelFatiga = NivelFatiga.SEVERO; }
-            },
-            {
-                name: 'Fatiga Alto',
-                conditions: facts => facts.sueno_perdido === 'moderado' || facts.agobio_tension === 'moderado',
-                actions: result => { result.nivelFatiga = NivelFatiga.ALTO; }
+                name: 'Fatiga Leve',
+                conditions: facts => facts.sueno_perdido === 'no' && facts.agobio_tension === 'no',
+                actions: result => { result.nivelFatiga = NivelFatiga.LEVE; },
             },
             {
                 name: 'Fatiga Bajo',
@@ -44,16 +63,26 @@ export class KnowledgeBase {
                 actions: result => { result.nivelFatiga = NivelFatiga.BAJO; }
             },
             {
-                name: 'Fatiga Leve',
-                conditions: facts => facts.sueno_perdido === 'no' && facts.agobio_tension === 'no',
-                actions: result => { result.nivelFatiga = NivelFatiga.LEVE; }
+                name: 'Fatiga Alto',
+                conditions: facts => facts.sueno_perdido === 'moderado' || facts.agobio_tension === 'moderado',
+                actions: result => { result.nivelFatiga = NivelFatiga.ALTO; }
+            },
+            {
+                name: 'Fatiga Severo',
+                conditions: facts => facts.sueno_perdido === 'severo' || facts.agobio_tension === 'alto',
+                actions: result => { result.nivelFatiga = NivelFatiga.SEVERO; }
             },
 
             // 6–9) Riesgo burnout según dificultades
             {
-                name: 'Burnout Alto',
+                name: 'Burnout Leve',
                 conditions: facts => facts.dificultades === 'si',
-                actions: result => { result.riesgoBurnout = RiesgoBurnout.ALTO; }
+                actions: result => { result.riesgoBurnout = RiesgoBurnout.LEVE; },
+            },
+            {
+                name: 'Burnout Bajo',
+                conditions: facts => facts.dificultades === 'a_veces',
+                actions: result => { result.riesgoBurnout = RiesgoBurnout.BAJO; },
             },
             {
                 name: 'Burnout Moderado',
@@ -61,19 +90,9 @@ export class KnowledgeBase {
                 actions: result => { result.riesgoBurnout = RiesgoBurnout.MODERADO; }
             },
             {
-                name: 'Burnout Bajo',
-                conditions: facts => facts.dificultades === 'a_veces',
-                actions: result => { result.riesgoBurnout = RiesgoBurnout.BAJO; }
-            },
-            {
-                name: 'Burnout Leve',
+                name: 'Burnout Alto',
                 conditions: facts => facts.dificultades === 'nunca',
-                actions: result => { result.riesgoBurnout = RiesgoBurnout.LEVE; }
-            },
-            {
-                name: 'Burnout Siempre',
-                conditions: facts => facts.dificultades === 'siempre',
-                actions: result => { result.riesgoBurnout = RiesgoBurnout.BAJO; }
+                actions: result => { result.riesgoBurnout = RiesgoBurnout.ALTO; }
             },
 
             // 10–14) Estados emocionales directos
@@ -82,14 +101,12 @@ export class KnowledgeBase {
                 conditions: facts =>
                     facts.depresion === 'severo' || facts.sentido_utilidad === 'nada',
                 actions: result => { result.estadoEmocional = EstadoEmocional.DEPRESIVO; },
-                stop: true
             },
             {
                 name: 'Estado Triste',
                 conditions: facts =>
                     facts.depresion === 'moderado' || facts.disfrute_actividades === 'poco',
                 actions: result => { result.estadoEmocional = EstadoEmocional.TRISTE; },
-                stop: true
             },
             {
                 name: 'Estado Enojado',
@@ -106,7 +123,7 @@ export class KnowledgeBase {
             {
                 name: 'Estado Feliz',
                 conditions: facts =>
-                    ['si', 'algo'].includes(facts.felicidad) && ['media', 'alta'].includes(facts.desconfianza),
+                    ['si', 'algo'].includes(facts.felicidad) && ['media', 'muy_baja'].includes(facts.desconfianza),
                 actions: result => { result.estadoEmocional = EstadoEmocional.FELIZ; }
             },
 
@@ -117,10 +134,11 @@ export class KnowledgeBase {
                     (['mucho_menos', 'menos'].includes(facts.concentracion) ? 1 : 0) +
                     (['moderado', 'severo'].includes(facts.sueno_perdido) ? 1 : 0) +
                     (['moderado', 'alto'].includes(facts.agobio_tension) ? 1 : 0) +
-                    (['a_veces', 'nunca'].includes(facts.enfrentar_problemas) ? 1 : 0) >= 4,
+                    (['rara_vez', 'nunca'].includes(facts.enfrentar_problemas) ? 1 : 0) >= 4,
                 actions: result => {
                     result.estadoEmocional = EstadoEmocional.MIEDOSO;
-                }
+                },
+                stop: true
             },
             {
                 name: 'Ansiedad Moderada',
@@ -131,7 +149,8 @@ export class KnowledgeBase {
                     (['rara_vez', 'nunca'].includes(facts.enfrentar_problemas) ? 1 : 0) >= 2,
                 actions: result => {
                     result.estadoEmocional = EstadoEmocional.ESTRESADO;
-                }
+                },
+                stop: true
             },
 
             // 17–18) Depresión (Goldberg) en dos niveles
@@ -146,7 +165,8 @@ export class KnowledgeBase {
                     result.estadoEmocional = EstadoEmocional.DEPRESIVO;
                     result.nivelFatiga = NivelFatiga.ALTO;
                     result.riesgoBurnout = RiesgoBurnout.MODERADO;
-                }
+                },
+                stop: true
             },
             {
                 name: 'Depresión Moderada',
@@ -157,7 +177,8 @@ export class KnowledgeBase {
                     result.estadoEmocional = EstadoEmocional.TRISTE;
                     result.nivelFatiga = NivelFatiga.ALTO;
                     result.riesgoBurnout = RiesgoBurnout.BAJO;
-                }
+                },
+                stop: true
             }
         ];
     }
