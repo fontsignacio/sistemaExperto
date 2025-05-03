@@ -117,7 +117,7 @@ export class KnowledgeBase {
                     (['mucho_menos', 'menos'].includes(facts.concentracion) ? 1 : 0) +
                     (['moderado', 'severo'].includes(facts.sueno_perdido) ? 1 : 0) +
                     (['moderado', 'alto'].includes(facts.agobio_tension) ? 1 : 0) +
-                    (['rara_vez', 'nunca'].includes(facts.enfrentar_problemas) ? 1 : 0) >= 4,
+                    (['a_veces', 'nunca'].includes(facts.enfrentar_problemas) ? 1 : 0) >= 4,
                 actions: result => {
                     result.estadoEmocional = EstadoEmocional.MIEDOSO;
                 }
@@ -128,7 +128,7 @@ export class KnowledgeBase {
                     (['mucho_menos', 'menos'].includes(facts.concentracion) ? 1 : 0) +
                     (['moderado', 'severo'].includes(facts.sueno_perdido) ? 1 : 0) +
                     (['moderado', 'alto'].includes(facts.agobio_tension) ? 1 : 0) +
-                    (['rara_vez', 'nunca'].includes(facts.enfrentar_problemas) ? 1 : 0) >= 2,
+                    (['a_veces', 'nunca'].includes(facts.enfrentar_problemas) ? 1 : 0) >= 2,
                 actions: result => {
                     result.estadoEmocional = EstadoEmocional.ESTRESADO;
                 }
