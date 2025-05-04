@@ -3,33 +3,9 @@ import { EstadoEmocional, NivelFatiga, RiesgoBurnout } from '../enums/resultEnum
 export class KnowledgeBase {
     constructor() {
         this.rules = [
-            // Regla RÁPIDA de resiliencia (detiene inferencia)
-            {
-                name: 'Resiliencia Detectada',
-                conditions: facts =>
-                    facts.concentracion === 'mejor' &&
-                    facts.sueno_perdido === 'no' &&
-                    facts.sentido_utilidad === 'mucho' &&
-                    facts.capacidad_decidir === 'alta' &&
-                    facts.agobio_tension === 'leve' &&
-                    facts.dificultades === 'nunca' &&
-                    facts.disfrute_actividades === 'mucho' &&
-                    facts.enfrentar_problemas === 'siempre' &&
-                    facts.depresion === 'no' &&
-                    facts.desconfianza === 'muy_baja' &&
-                    facts.baja_autoestima === 'nula' &&
-                    facts.felicidad === 'si',
-                actions: result => {
-                    result.estadoEmocional = EstadoEmocional.FELIZ;
-                    result.nivelFatiga = NivelFatiga.LEVE;
-                    result.riesgoBurnout = RiesgoBurnout.LEVE;
-                },
-                stop: true
-            },
-
             // 1) Caso más desfavorable: detiene la inferencia
             {
-                name: 'Burnout Máximo',
+                name: 'Peor extremo',
                 conditions: facts =>
                     facts.concentracion === 'mucho_menos' &&
                     facts.sueno_perdido === 'severo' &&
@@ -50,7 +26,6 @@ export class KnowledgeBase {
                 },
                 stop: true
             },
-
             // 2–5) Fatiga: LEVE antes que BAJO
             {
                 name: 'Fatiga Leve',
@@ -63,9 +38,9 @@ export class KnowledgeBase {
                 actions: result => { result.nivelFatiga = NivelFatiga.BAJO; }
             },
             {
-                name: 'Fatiga Alto',
+                name: 'Fatiga Moderado',
                 conditions: facts => facts.sueno_perdido === 'moderado' || facts.agobio_tension === 'moderado',
-                actions: result => { result.nivelFatiga = NivelFatiga.ALTO; }
+                actions: result => { result.nivelFatiga = NivelFatiga.MODERADO; }
             },
             {
                 name: 'Fatiga Severo',
@@ -76,7 +51,7 @@ export class KnowledgeBase {
             // 6–9) Riesgo burnout según dificultades
             {
                 name: 'Burnout Leve',
-                conditions: facts => facts.dificultades === 'si',
+                conditions: facts => facts.dificultades === 'nunca',
                 actions: result => { result.riesgoBurnout = RiesgoBurnout.LEVE; },
             },
             {
@@ -91,10 +66,9 @@ export class KnowledgeBase {
             },
             {
                 name: 'Burnout Alto',
-                conditions: facts => facts.dificultades === 'nunca',
+                conditions: facts => facts.dificultades === 'si',
                 actions: result => { result.riesgoBurnout = RiesgoBurnout.ALTO; }
             },
-
             // 10–14) Estados emocionales directos
             {
                 name: 'Estado Depresivo',
@@ -126,7 +100,6 @@ export class KnowledgeBase {
                     ['si', 'algo'].includes(facts.felicidad) && ['media', 'muy_baja'].includes(facts.desconfianza),
                 actions: result => { result.estadoEmocional = EstadoEmocional.FELIZ; }
             },
-
             // 15–16) Ansiedad (Goldberg) en dos niveles
             {
                 name: 'Ansiedad Severa',
