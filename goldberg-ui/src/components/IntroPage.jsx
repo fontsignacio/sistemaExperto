@@ -1,0 +1,33 @@
+import React from 'react';
+import '../styles/IntroPage.css';
+
+const IntroPage = ({ onStart }) => (
+  <section className="intro-hero">
+    <div className="intro-card">
+      <h1>Test de burnout</h1>
+      <p>
+        Haz el test de burnout de forma gratuita y con un resultado inmediato. 
+        El test para evaluar el síndrome de burnout que puedes realizar aquí 
+        es el CBI (Copenhagen Burnout Inventory test), un instrumento de cribado 
+        reconocido por la comunidad científica internacional. La versión del test 
+        que te proponemos está en español y se utiliza para el síndrome de burnout, 
+        síndrome de desgaste profesional o, coloquialmente, síndrome del trabajador quemado.
+      </p>
+      <div className="buttons">
+        <button onClick={onStart} className="btn btn-primary">
+          HAZ EL TEST
+        </button>
+        <a
+          href="https://drive.google.com/drive/folders/1ZAzzKPLAPtnFc0E4W7KLZDTeI3jPkXz6?usp=sharing"
+          target="_blank"
+          rel="noopener"
+          className="btn btn-secondary"
+        >
+          Ver PDF informativo
+        </a>
+      </div>
+    </div>
+  </section>
+);
+
+export default IntroPage;

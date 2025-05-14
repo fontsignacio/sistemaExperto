@@ -1,12 +1,12 @@
+// src/main.jsx
 import React from 'react';
 import ReactDOM from 'react-dom/client';
-import Wizard from './components/Wizard';
-
-import './styles/styles.css';   // ← tu hoja global copiada
-import './index.css';           // reset de Vite
+import App      from './App';           // ↖⇐ Apunta a tu App.jsx
+import './styles/styles.css';
+import './index.css';
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
-    <Wizard />
+    <App />                              { /* ← Sólo App */ }
   </React.StrictMode>
 );
