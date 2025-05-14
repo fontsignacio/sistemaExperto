@@ -1,0 +1,123 @@
+[
+    {
+      "name": "concentracion",
+      "text": "1. ¿Ha podido concentrarse bien en lo que hace?",
+      "options": [
+        { "value": "mejor",       "label": "Mejor que lo habitual" },
+        { "value": "igual",       "label": "Igual que lo habitual" },
+        { "value": "menos",       "label": "Menos que lo habitual" },
+        { "value": "mucho_menos", "label": "Mucho menos que lo habitual" }
+      ]
+    },
+    {
+      "name": "sueno_perdido",
+      "text": "2. ¿Sus preocupaciones le han hecho perder mucho sueño?",
+      "options": [
+        { "value": "no",       "label": "No" },
+        { "value": "leve",     "label": "Leve" },
+        { "value": "moderado", "label": "Moderado" },
+        { "value": "severo",   "label": "Severo" }
+      ]
+    },
+    {
+      "name": "sentido_utilidad",
+      "text": "3. ¿Ha sentido que está jugando un papel útil en la vida?",
+      "options": [
+        { "value": "mucho", "label": "Mucho" },
+        { "value": "algo",  "label": "Algo" },
+        { "value": "poco",  "label": "Poco" },
+        { "value": "nada",  "label": "Nada" }
+      ]
+    },
+    {
+      "name": "capacidad_decidir",
+      "text": "4. ¿Se ha sentido capaz de tomar decisiones?",
+      "options": [
+        { "value": "alta",  "label": "Alta" },
+        { "value": "media", "label": "Media" },
+        { "value": "baja",  "label": "Baja" },
+        { "value": "nula",  "label": "Nula" }
+      ]
+    },
+    {
+      "name": "agobio_tension",
+      "text": "5. ¿Se ha sentido constantemente agobiado y en tensión?",
+      "options": [
+        { "value": "no",       "label": "No" },
+        { "value": "leve",     "label": "Leve" },
+        { "value": "moderado", "label": "Moderado" },
+        { "value": "alto",     "label": "Alto" }
+      ]
+    },
+    {
+      "name": "dificultades",
+      "text": "6. ¿Ha sentido que no puede superar sus dificultades?",
+      "options": [
+        { "value": "si",           "label": "Sí" },
+        { "value": "a_veces",      "label": "A veces" },
+        { "value": "frecuentemente","label": "Frecuentemente" },
+        { "value": "nunca",        "label": "Nunca" }
+      ]
+    },
+    {
+      "name": "disfrute_actividades",
+      "text": "7. ¿Ha sido capaz de disfrutar sus actividades normales?",
+      "options": [
+        { "value": "mucho", "label": "Mucho" },
+        { "value": "algo",  "label": "Algo" },
+        { "value": "poco",  "label": "Poco" },
+        { "value": "nada",  "label": "Nada" }
+      ]
+    },
+    {
+      "name": "enfrentar_problemas",
+      "text": "8. ¿Ha sido capaz de hacer frente a sus problemas?",
+      "options": [
+        { "value": "siempre",   "label": "Siempre" },
+        { "value": "a_veces",   "label": "A veces" },
+        { "value": "rara_vez",  "label": "Rara vez" },
+        { "value": "nunca",     "label": "Nunca" }
+      ]
+    },
+    {
+      "name": "depresion",
+      "text": "9. ¿Se ha sentido poco feliz y deprimido?",
+      "options": [
+        { "value": "no",       "label": "No" },
+        { "value": "leve",     "label": "Leve" },
+        { "value": "moderado", "label": "Moderado" },
+        { "value": "severo",   "label": "Severo" }
+      ]
+    },
+    {
+      "name": "desconfianza",
+      "text": "10. ¿Ha perdido confianza en sí mismo?",
+      "options": [
+        { "value": "alta",      "label": "Alta" },
+        { "value": "media",     "label": "Media" },
+        { "value": "baja",      "label": "Baja" },
+        { "value": "muy_baja",  "label": "Muy baja" }
+      ]
+    },
+    {
+      "name": "baja_autoestima",
+      "text": "11. ¿Ha pensado que no vale para nada?",
+      "options": [
+        { "value": "alta", "label": "Alta" },
+        { "value": "media","label": "Media" },
+        { "value": "baja", "label": "Baja" },
+        { "value": "nula", "label": "Nula" }
+      ]
+    },
+    {
+      "name": "felicidad",
+      "text": "12. ¿Se siente razonablemente feliz?",
+      "options": [
+        { "value": "si",   "label": "Sí" },
+        { "value": "algo", "label": "Algo" },
+        { "value": "poco", "label": "Poco" },
+        { "value": "nada", "label": "Nada" }
+      ]
+    }
+  ]
+  
