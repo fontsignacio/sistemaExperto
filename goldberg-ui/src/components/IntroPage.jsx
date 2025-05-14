@@ -18,7 +18,7 @@ const IntroPage = ({ onStart }) => (
           HAZ EL TEST
         </button>
         <a
-          href="https://drive.google.com/drive/folders/1ZAzzKPLAPtnFc0E4W7KLZDTeI3jPkXz6?usp=sharing"
+          href="https://frtutneduar-my.sharepoint.com/:w:/g/personal/mariano_mercado_alu_frt_utn_edu_ar/EadoQGI-dMNOkcBmjbm2pN0BqPuLU2d9eZ1vCKH_YPLyNw?e=8WIXEq"
           target="_blank"
           rel="noopener"
           className="btn btn-secondary"
