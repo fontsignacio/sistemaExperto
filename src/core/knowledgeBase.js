@@ -27,202 +27,343 @@ export class KnowledgeBase {
                 stop: true
             },
 
-            // fatiga:preguntas 2, 5 
+            // fatiga:preguntas 2, 5, 6 , 7 (sueno_perdido, agobio_tension, disfrute_actividades, dificultades)
+            {
+                name: 'Fatiga Severo',
+                conditions: facts => {
+                    const total =
+                        (facts.sueno_perdido === 'severo' ? 3 : facts.sueno_perdido === 'moderado' ? 2 : facts.sueno_perdido === 'leve' ? 1 : 0) +
+                        (facts.agobio_tension === 'alto' ? 3 : facts.agobio_tension === 'moderado' ? 2 : facts.agobio_tension === 'leve' ? 1 : 0) +
+                        (facts.dificultades === 'si' ? 3 : facts.dificultades === 'frecuentemente' ? 2 : facts.dificultades === 'a_veces' ? 1 : 0) +
+                        (facts.disfrute_actividades === 'nada' ? 3 : facts.disfrute_actividades === 'poco' ? 2 : facts.disfrute_actividades === 'algo' ? 1 : 0);
+                    return total >= 9;
+                },
+                actions: result => { result.nivelFatiga = NivelFatiga.SEVERO; }
+            },
+
+            // 2) Fatiga Alto (6–8)
+            {
+                name: 'Fatiga Alto',
+                conditions: facts => {
+                    const total =
+                        (facts.sueno_perdido === 'severo' ? 3 : facts.sueno_perdido === 'moderado' ? 2 : facts.sueno_perdido === 'leve' ? 1 : 0) +
+                        (facts.agobio_tension === 'alto' ? 3 : facts.agobio_tension === 'moderado' ? 2 : facts.agobio_tension === 'leve' ? 1 : 0) +
+                        (facts.dificultades === 'si' ? 3 : facts.dificultades === 'frecuentemente' ? 2 : facts.dificultades === 'a_veces' ? 1 : 0) +
+                        (facts.disfrute_actividades === 'nada' ? 3 : facts.disfrute_actividades === 'poco' ? 2 : facts.disfrute_actividades === 'algo' ? 1 : 0);
+                    return total >= 6 && total <= 8;
+                },
+                actions: result => { result.nivelFatiga = NivelFatiga.ALTO; }
+            },
+
+            // 3) Fatiga Moderado (3–5)
+            {
+                name: 'Fatiga Moderado',
+                conditions: facts => {
+                    const total =
+                        (facts.sueno_perdido === 'severo' ? 3 : facts.sueno_perdido === 'moderado' ? 2 : facts.sueno_perdido === 'leve' ? 1 : 0) +
+                        (facts.agobio_tension === 'alto' ? 3 : facts.agobio_tension === 'moderado' ? 2 : facts.agobio_tension === 'leve' ? 1 : 0) +
+                        (facts.dificultades === 'si' ? 3 : facts.dificultades === 'frecuentemente' ? 2 : facts.dificultades === 'a_veces' ? 1 : 0) +
+                        (facts.disfrute_actividades === 'nada' ? 3 : facts.disfrute_actividades === 'poco' ? 2 : facts.disfrute_actividades === 'algo' ? 1 : 0);
+                    return total >= 3 && total <= 5;
+                },
+                actions: result => { result.nivelFatiga = NivelFatiga.MODERADO; }
+            },
+
+            // 4) Fatiga Bajo (1–2)
+            {
+                name: 'Fatiga Bajo',
+                conditions: facts => {
+                    const total =
+                        (facts.sueno_perdido === 'severo' ? 3 : facts.sueno_perdido === 'moderado' ? 2 : facts.sueno_perdido === 'leve' ? 1 : 0) +
+                        (facts.agobio_tension === 'alto' ? 3 : facts.agobio_tension === 'moderado' ? 2 : facts.agobio_tension === 'leve' ? 1 : 0) +
+                        (facts.dificultades === 'si' ? 3 : facts.dificultades === 'frecuentemente' ? 2 : facts.dificultades === 'a_veces' ? 1 : 0) +
+                        (facts.disfrute_actividades === 'nada' ? 3 : facts.disfrute_actividades === 'poco' ? 2 : facts.disfrute_actividades === 'algo' ? 1 : 0);
+                    return total >= 1 && total <= 2;
+                },
+                actions: result => { result.nivelFatiga = NivelFatiga.BAJO; }
+            },
+
+            // 5) Fatiga Leve (0)
             {
                 name: 'Fatiga Leve',
-                conditions: facts => facts.sueno_perdido === 'no' && facts.agobio_tension === 'no',
+                conditions: facts => {
+                    const total =
+                        (facts.sueno_perdido === 'severo' ? 3 : facts.sueno_perdido === 'moderado' ? 2 : facts.sueno_perdido === 'leve' ? 1 : 0) +
+                        (facts.agobio_tension === 'alto' ? 3 : facts.agobio_tension === 'moderado' ? 2 : facts.agobio_tension === 'leve' ? 1 : 0) +
+                        (facts.dificultades === 'si' ? 3 : facts.dificultades === 'frecuentemente' ? 2 : facts.dificultades === 'a_veces' ? 1 : 0) +
+                        (facts.disfrute_actividades === 'nada' ? 3 : facts.disfrute_actividades === 'poco' ? 2 : facts.disfrute_actividades === 'algo' ? 1 : 0);
+                    return total === 0;
+                },
                 actions: result => { result.nivelFatiga = NivelFatiga.LEVE; }
             },
+
+            // riesgo burnout: preguntas 1, 8 , 11 (concentracion, capacidad_decidir, baja_autoestima)
             {
-                name: 'Fatiga Bajo 1',
-                conditions: facts => facts.sueno_perdido === 'leve' && facts.agobio_tension === 'no',
-                actions: result => { result.nivelFatiga = NivelFatiga.BAJO; }
-            },
-            {
-                name: 'Fatiga Bajo 2',
-                conditions: facts => facts.sueno_perdido === 'no' && facts.agobio_tension === 'leve',
-                actions: result => { result.nivelFatiga = NivelFatiga.BAJO; }
-            },
-            {
-                name: 'Fatiga Moderado 1',
-                conditions: facts => facts.sueno_perdido === 'leve' && facts.agobio_tension === 'leve',
-                actions: result => { result.nivelFatiga = NivelFatiga.MODERADO; }
-            },
-            {
-                name: 'Fatiga Moderado 2',
-                conditions: facts => facts.sueno_perdido === 'moderado' && facts.agobio_tension === 'no',
-                actions: result => { result.nivelFatiga = NivelFatiga.MODERADO; }
-            },
-            {
-                name: 'Fatiga Moderado 3',
-                conditions: facts => facts.sueno_perdido === 'leve' && facts.agobio_tension === 'moderado',
-                actions: result => { result.nivelFatiga = NivelFatiga.MODERADO; }
-            },
-            {
-                name: 'Fatiga Alto 1',
-                conditions: facts => facts.sueno_perdido === 'no' && facts.agobio_tension === 'alto',
-                actions: result => { result.nivelFatiga = NivelFatiga.ALTO; }
-            },
-            {
-                name: 'Fatiga Alto 2',
-                conditions: facts => facts.sueno_perdido === 'leve' && facts.agobio_tension === 'alto',
-                actions: result => { result.nivelFatiga = NivelFatiga.ALTO; }
-            },
-            {
-                name: 'Fatiga Alto 3',
-                conditions: facts => facts.sueno_perdido === 'severo' && facts.agobio_tension === 'leve',
-                actions: result => { result.nivelFatiga = NivelFatiga.ALTO; }
-            },
-            {
-                name: 'Fatiga Alto 4',
-                conditions: facts => facts.sueno_perdido === 'severo' && facts.agobio_tension === 'moderado',
-                actions: result => { result.nivelFatiga = NivelFatiga.ALTO; }
-            },
-            {
-                name: 'Fatiga Alto 5',
-                conditions: facts => facts.sueno_perdido === 'severo' && facts.agobio_tension === 'moderado',
-                actions: result => { result.nivelFatiga = NivelFatiga.ALTO; }
-            },
-            {
-                name: 'Fatiga Severo 1',
-                conditions: facts => facts.sueno_perdido === 'moderado' && facts.agobio_tension === 'alto',
-                actions: result => { result.nivelFatiga = NivelFatiga.SEVERO; }
-            },
-            {
-                name: 'Fatiga Severo 2',
-                conditions: facts => facts.sueno_perdido === 'severo' && facts.agobio_tension === 'alto',
-                actions: result => { result.nivelFatiga = NivelFatiga.SEVERO; }
+                name: 'Burnout Alto',
+                conditions: facts => {
+                    const wCon = facts.concentracion === 'mucho_menos' ? 3
+                        : facts.concentracion === 'menos' ? 2
+                            : facts.concentracion === 'igual' ? 1
+                                : 0;
+                    const wCap = facts.capacidad_decidir === 'nula' ? 3
+                        : facts.capacidad_decidir === 'baja' ? 2
+                            : facts.capacidad_decidir === 'media' ? 1
+                                : 0;
+                    const wAuto = facts.baja_autoestima === 'alta' ? 3
+                        : facts.baja_autoestima === 'media' ? 2
+                            : facts.baja_autoestima === 'baja' ? 1
+                                : 0;
+                    const total = wCon + wCap + wAuto;
+                    return total >= 6;
+                },
+                actions: result => { result.riesgoBurnout = RiesgoBurnout.ALTO; }
             },
 
-
-            // riesgo burnout: preguntas 4,6
-
-          {
-                name: 'Riesgo Leve',
-                conditions: facts => facts.capacidad_decidir === 'alta' && facts.dificultades === 'nunca',
-                actions: result => { result.riesgo = RiesgoBurnout.LEVE; }
-            },
+            // Riesgo Burnout Moderado (total 3–5)
             {
-                name: 'Riesgo Bajo 1',
-                conditions: facts => facts.capacidad_decidir === 'alta' && facts.dificultades === 'a_veces',
-                actions: result => { result.riesgo = RiesgoBurnout.BAJO; }
-            },
-            {
-                name: 'Riesgo Bajo 2',
-                conditions: facts => facts.capacidad_decidir === 'media' && facts.dificultades === 'nunca',
-                actions: result => { result.riesgo = RiesgoBurnout.BAJO; }
-            },
-            {
-                name: 'Riesgo Moderado 1',
-                conditions: facts => facts.capacidad_decidir === 'alta' && (facts.dificultades === 'frecuentemente' || facts.dificultades === 'si'),
-                actions: result => { result.riesgo = RiesgoBurnout.MODERADO; }
-            },
-            {
-                name: 'Riesgo Moderado 2',
-                conditions: facts => facts.capacidad_decidir === 'media' && facts.dificultades === 'a_veces',
-                actions: result => { result.riesgo = RiesgoBurnout.MODERADO; }
-            },
-            {
-                name: 'Riesgo Alto 1',
-                conditions: facts => facts.capacidad_decidir === 'media' && (facts.dificultades === 'frecuentemente' || facts.dificultades === 'si'),
-                actions: result => { result.riesgo = RiesgoBurnout.ALTO; }
-            },
-            {
-                name: 'Riesgo Alto 2',
-                conditions: facts => facts.capacidad_decidir === 'baja' && facts.dificultades !== 'nunca',
-                actions: result => { result.riesgo = RiesgoBurnout.ALTO; }
-            },
-            {
-                name: 'Riesgo Moderado 3',
-                conditions: facts => facts.capacidad_decidir === 'baja' && facts.dificultades === 'nunca',
-                actions: result => { result.riesgo = RiesgoBurnout.MODERADO; }
-            },
-            {
-                name: 'Riesgo Alto 3',
-                conditions: facts => facts.capacidad_decidir === 'nula',
-                actions: result => { result.riesgo = RiesgoBurnout.ALTO; }
+                name: 'Burnout Moderado',
+                conditions: facts => {
+                    const wCon = facts.concentracion === 'mucho_menos' ? 3
+                        : facts.concentracion === 'menos' ? 2
+                            : facts.concentracion === 'igual' ? 1
+                                : 0;
+                    const wCap = facts.capacidad_decidir === 'nula' ? 3
+                        : facts.capacidad_decidir === 'baja' ? 2
+                            : facts.capacidad_decidir === 'media' ? 1
+                                : 0;
+                    const wAuto = facts.baja_autoestima === 'alta' ? 3
+                        : facts.baja_autoestima === 'media' ? 2
+                            : facts.baja_autoestima === 'baja' ? 1
+                                : 0;
+                    const total = wCon + wCap + wAuto;
+                    return total >= 3 && total <= 5;
+                },
+                actions: result => { result.riesgoBurnout = RiesgoBurnout.MODERADO; }
             },
 
-
-
-
-
-            // Estado emocional: preguntas 1, 3, 7, 9, 10, 11, 12
+            // Riesgo Burnout Bajo (total 1–2)
             {
-                name: 'Estado Feliz',
-                conditions: facts =>
-                    facts.concentracion === 'mejor' &&
-                    facts.sentido_utilidad === 'mucho' &&
-                    facts.disfrute_actividades === 'mucho' &&
-                    facts.depresion === 'no' &&
-                    facts.desconfianza === 'muy_baja' &&
-                    facts.baja_autoestima === 'nula' &&
-                    facts.felicidad === 'si',
-                actions: result => { result.estadoEmocional = EstadoEmocional.FELIZ; }
+                name: 'Burnout Bajo',
+                conditions: facts => {
+                    const wCon = facts.concentracion === 'mucho_menos' ? 3
+                        : facts.concentracion === 'menos' ? 2
+                            : facts.concentracion === 'igual' ? 1
+                                : 0;
+                    const wCap = facts.capacidad_decidir === 'nula' ? 3
+                        : facts.capacidad_decidir === 'baja' ? 2
+                            : facts.capacidad_decidir === 'media' ? 1
+                                : 0;
+                    const wAuto = facts.baja_autoestima === 'alta' ? 3
+                        : facts.baja_autoestima === 'media' ? 2
+                            : facts.baja_autoestima === 'baja' ? 1
+                                : 0;
+                    const total = wCon + wCap + wAuto;
+                    return total >= 1 && total <= 2;
+                },
+                actions: result => { result.riesgoBurnout = RiesgoBurnout.BAJO; }
             },
+
+            // Riesgo Burnout Leve (total == 0)
             {
-                name: 'Estado Triste',
-                conditions: facts =>
-                    (facts.felicidad === 'poco' || facts.felicidad === 'nada') &&
-                    (facts.disfrute_actividades === 'poco' || facts.disfrute_actividades === 'nada') &&
-                    (facts.sentido_utilidad === 'poco' || facts.sentido_utilidad === 'nada') &&
-                    (facts.concentracion === 'menos' || facts.concentracion === 'mucho_menos') &&
-                    (facts.baja_autoestima === 'media' || facts.baja_autoestima === 'alta') &&
-                    (facts.desconfianza === 'media' || facts.desconfianza === 'baja'),
-                actions: result => { result.estadoEmocional = EstadoEmocional.TRISTE; }
+                name: 'Burnout Leve',
+                conditions: facts => {
+                    const wCon = facts.concentracion === 'mucho_menos' ? 3
+                        : facts.concentracion === 'menos' ? 2
+                            : facts.concentracion === 'igual' ? 1
+                                : 0;
+                    const wCap = facts.capacidad_decidir === 'nula' ? 3
+                        : facts.capacidad_decidir === 'baja' ? 2
+                            : facts.capacidad_decidir === 'media' ? 1
+                                : 0;
+                    const wAuto = facts.baja_autoestima === 'alta' ? 3
+                        : facts.baja_autoestima === 'media' ? 2
+                            : facts.baja_autoestima === 'baja' ? 1
+                                : 0;
+                    const total = wCon + wCap + wAuto;
+                    return total === 0;
+                },
+                actions: result => { result.riesgoBurnout = RiesgoBurnout.LEVE; }
             },
+
+            // Estado emocional: preguntas 3, 4, 9, 10, 12 (sentido_utilidad, capacidad_decidir, depresion, desconfianza, felicidad)
             {
                 name: 'Estado Depresivo',
-                conditions: facts =>
-                    (facts.depresion === 'moderado' || facts.depresion === 'severo') &&
-                    (facts.felicidad === 'nada' || facts.felicidad === 'poco') &&
-                    (facts.disfrute_actividades === 'nada' || facts.disfrute_actividades === 'poco') &&
-                    (facts.sentido_utilidad === 'nada' || facts.sentido_utilidad === 'poco') &&
-                    facts.baja_autoestima === 'alta' &&
-                    facts.desconfianza === 'alta' &&
-                    (facts.concentracion === 'mucho_menos' || facts.concentracion === 'menos'),
+                conditions: facts => {
+                    const wUtil = facts.sentido_utilidad === 'mucho' ? 3
+                        : facts.sentido_utilidad === 'algo' ? 2
+                            : facts.sentido_utilidad === 'poco' ? 1
+                                : 0;
+                    const wDec = facts.capacidad_decidir === 'alta' ? 3
+                        : facts.capacidad_decidir === 'media' ? 2
+                            : facts.capacidad_decidir === 'baja' ? 1
+                                : 0;
+                    const wDep = facts.depresion === 'no' ? 3
+                        : facts.depresion === 'leve' ? 2
+                            : facts.depresion === 'moderado' ? 1
+                                : 0;
+                    const wDes = facts.desconfianza === 'muy_baja' ? 3
+                        : facts.desconfianza === 'baja' ? 2
+                            : facts.desconfianza === 'media' ? 1
+                                : 0;
+                    const wFeli = facts.felicidad === 'si' ? 3
+                        : facts.felicidad === 'algo' ? 2
+                            : facts.felicidad === 'poco' ? 1
+                                : 0;
+                    const total = wUtil + wDec + wDep + wDes + wFeli;
+                    return total <= 2;
+                },
                 actions: result => { result.estadoEmocional = EstadoEmocional.DEPRESIVO; }
             },
+
+            // Estado Triste (3–5)
+            {
+                name: 'Estado Triste',
+                conditions: facts => {
+                    const wUtil = facts.sentido_utilidad === 'mucho' ? 3
+                        : facts.sentido_utilidad === 'algo' ? 2
+                            : facts.sentido_utilidad === 'poco' ? 1
+                                : 0;
+                    const wDec = facts.capacidad_decidir === 'alta' ? 3
+                        : facts.capacidad_decidir === 'media' ? 2
+                            : facts.capacidad_decidir === 'baja' ? 1
+                                : 0;
+                    const wDep = facts.depresion === 'no' ? 3
+                        : facts.depresion === 'leve' ? 2
+                            : facts.depresion === 'moderado' ? 1
+                                : 0;
+                    const wDes = facts.desconfianza === 'muy_baja' ? 3
+                        : facts.desconfianza === 'baja' ? 2
+                            : facts.desconfianza === 'media' ? 1
+                                : 0;
+                    const wFeli = facts.felicidad === 'si' ? 3
+                        : facts.felicidad === 'algo' ? 2
+                            : facts.felicidad === 'poco' ? 1
+                                : 0;
+                    const total = wUtil + wDec + wDep + wDes + wFeli;
+                    return total >= 3 && total <= 5;
+                },
+                actions: result => { result.estadoEmocional = EstadoEmocional.TRISTE; }
+            },
+
+            // Estado Estresado (6–8)
             {
                 name: 'Estado Estresado',
-                conditions: facts =>
-                    (facts.concentracion === 'menos' || facts.concentracion === 'mucho_menos') &&
-                    (facts.desconfianza === 'media' || facts.desconfianza === 'baja') &&
-                    (facts.disfrute_actividades === 'poco' || facts.disfrute_actividades === 'algo') &&
-                    (facts.felicidad === 'algo' || facts.felicidad === 'poco') &&
-                    (facts.depresion === 'leve' || facts.depresion === 'moderado') &&
-                    (facts.sentido_utilidad === 'algo') &&
-                    (facts.baja_autoestima === 'media'),
+                conditions: facts => {
+                    const wUtil = facts.sentido_utilidad === 'mucho' ? 3
+                        : facts.sentido_utilidad === 'algo' ? 2
+                            : facts.sentido_utilidad === 'poco' ? 1
+                                : 0;
+                    const wDec = facts.capacidad_decidir === 'alta' ? 3
+                        : facts.capacidad_decidir === 'media' ? 2
+                            : facts.capacidad_decidir === 'baja' ? 1
+                                : 0;
+                    const wDep = facts.depresion === 'no' ? 3
+                        : facts.depresion === 'leve' ? 2
+                            : facts.depresion === 'moderado' ? 1
+                                : 0;
+                    const wDes = facts.desconfianza === 'muy_baja' ? 3
+                        : facts.desconfianza === 'baja' ? 2
+                            : facts.desconfianza === 'media' ? 1
+                                : 0;
+                    const wFeli = facts.felicidad === 'si' ? 3
+                        : facts.felicidad === 'algo' ? 2
+                            : facts.felicidad === 'poco' ? 1
+                                : 0;
+                    const total = wUtil + wDec + wDep + wDes + wFeli;
+                    return total >= 6 && total <= 8;
+                },
                 actions: result => { result.estadoEmocional = EstadoEmocional.ESTRESADO; }
             },
+
+            // Estado Miedoso (9–10)
             {
                 name: 'Estado Miedoso',
-                conditions: facts =>
-                    facts.desconfianza === 'muy_baja' &&
-                    (facts.baja_autoestima === 'alta' || facts.baja_autoestima === 'media') &&
-                    (facts.felicidad === 'poco' || facts.felicidad === 'nada') &&
-                    (facts.concentracion === 'mucho_menos') &&
-                    (facts.sentido_utilidad === 'nada' || facts.sentido_utilidad === 'poco') &&
-                    (facts.depresion === 'moderado'),
+                conditions: facts => {
+                    const wUtil = facts.sentido_utilidad === 'mucho' ? 3
+                        : facts.sentido_utilidad === 'algo' ? 2
+                            : facts.sentido_utilidad === 'poco' ? 1
+                                : 0;
+                    const wDec = facts.capacidad_decidir === 'alta' ? 3
+                        : facts.capacidad_decidir === 'media' ? 2
+                            : facts.capacidad_decidir === 'baja' ? 1
+                                : 0;
+                    const wDep = facts.depresion === 'no' ? 3
+                        : facts.depresion === 'leve' ? 2
+                            : facts.depresion === 'moderado' ? 1
+                                : 0;
+                    const wDes = facts.desconfianza === 'muy_baja' ? 3
+                        : facts.desconfianza === 'baja' ? 2
+                            : facts.desconfianza === 'media' ? 1
+                                : 0;
+                    const wFeli = facts.felicidad === 'si' ? 3
+                        : facts.felicidad === 'algo' ? 2
+                            : facts.felicidad === 'poco' ? 1
+                                : 0;
+                    const total = wUtil + wDec + wDep + wDes + wFeli;
+                    return total >= 9 && total <= 10;
+                },
                 actions: result => { result.estadoEmocional = EstadoEmocional.MIEDOSO; }
             },
+
+            // Estado Enojado (11)
             {
                 name: 'Estado Enojado',
-                conditions: facts =>
-                    facts.concentracion === 'mucho_menos' &&
-                    facts.sentido_utilidad === 'nada' &&
-                    facts.felicidad === 'nada' &&
-                    (facts.disfrute_actividades === 'nada' || facts.disfrute_actividades === 'poco') &&
-                    facts.desconfianza === 'alta' &&
-                    (facts.depresion === 'leve' || facts.depresion === 'moderado'),
+                conditions: facts => {
+                    const wUtil = facts.sentido_utilidad === 'mucho' ? 3
+                        : facts.sentido_utilidad === 'algo' ? 2
+                            : facts.sentido_utilidad === 'poco' ? 1
+                                : 0;
+                    const wDec = facts.capacidad_decidir === 'alta' ? 3
+                        : facts.capacidad_decidir === 'media' ? 2
+                            : facts.capacidad_decidir === 'baja' ? 1
+                                : 0;
+                    const wDep = facts.depresion === 'no' ? 3
+                        : facts.depresion === 'leve' ? 2
+                            : facts.depresion === 'moderado' ? 1
+                                : 0;
+                    const wDes = facts.desconfianza === 'muy_baja' ? 3
+                        : facts.desconfianza === 'baja' ? 2
+                            : facts.desconfianza === 'media' ? 1
+                                : 0;
+                    const wFeli = facts.felicidad === 'si' ? 3
+                        : facts.felicidad === 'algo' ? 2
+                            : facts.felicidad === 'poco' ? 1
+                                : 0;
+                    const total = wUtil + wDec + wDep + wDes + wFeli;
+                    return total === 11;
+                },
                 actions: result => { result.estadoEmocional = EstadoEmocional.ENOJADO; }
+            },
+
+            // Estado Feliz (12–15)
+            {
+                name: 'Estado Feliz',
+                conditions: facts => {
+                    const wUtil = facts.sentido_utilidad === 'mucho' ? 3
+                        : facts.sentido_utilidad === 'algo' ? 2
+                            : facts.sentido_utilidad === 'poco' ? 1
+                                : 0;
+                    const wDec = facts.capacidad_decidir === 'alta' ? 3
+                        : facts.capacidad_decidir === 'media' ? 2
+                            : facts.capacidad_decidir === 'baja' ? 1
+                                : 0;
+                    const wDep = facts.depresion === 'no' ? 3
+                        : facts.depresion === 'leve' ? 2
+                            : facts.depresion === 'moderado' ? 1
+                                : 0;
+                    const wDes = facts.desconfianza === 'muy_baja' ? 3
+                        : facts.desconfianza === 'baja' ? 2
+                            : facts.desconfianza === 'media' ? 1
+                                : 0;
+                    const wFeli = facts.felicidad === 'si' ? 3
+                        : facts.felicidad === 'algo' ? 2
+                            : facts.felicidad === 'poco' ? 1
+                                : 0;
+                    const total = wUtil + wDec + wDep + wDes + wFeli;
+                    return total >= 12;
+                },
+                actions: result => { result.estadoEmocional = EstadoEmocional.FELIZ; }
             }
-
-        
         ]
-    
     }
-    
 }
-
-
