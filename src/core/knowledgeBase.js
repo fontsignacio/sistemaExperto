@@ -97,7 +97,7 @@ export class KnowledgeBase {
                 actions: result => { result.nivelFatiga = NivelFatiga.LEVE; }
             },
 
-            // riesgo burnout: preguntas 1, 8 , 11 (concentracion, capacidad_decidir, baja_autoestima)
+            // riesgo burnout: preguntas 1, 8 , 11 (concentracion, enfrentar_problemas, baja_autoestima)
             {
                 name: 'Burnout Alto',
                 conditions: facts => {
@@ -105,9 +105,9 @@ export class KnowledgeBase {
                         : facts.concentracion === 'menos' ? 2
                             : facts.concentracion === 'igual' ? 1
                                 : 0;
-                    const wCap = facts.capacidad_decidir === 'nula' ? 3
-                        : facts.capacidad_decidir === 'baja' ? 2
-                            : facts.capacidad_decidir === 'media' ? 1
+                    const wCap = facts.enfrentar_problemas === 'nunca' ? 3
+                        : facts.enfrentar_problemas === 'rara_vez' ? 2
+                            : facts.enfrentar_problemas === 'a_veces' ? 1
                                 : 0;
                     const wAuto = facts.baja_autoestima === 'alta' ? 3
                         : facts.baja_autoestima === 'media' ? 2
@@ -127,9 +127,9 @@ export class KnowledgeBase {
                         : facts.concentracion === 'menos' ? 2
                             : facts.concentracion === 'igual' ? 1
                                 : 0;
-                    const wCap = facts.capacidad_decidir === 'nula' ? 3
-                        : facts.capacidad_decidir === 'baja' ? 2
-                            : facts.capacidad_decidir === 'media' ? 1
+                    const wCap = facts.enfrentar_problemas === 'nunca' ? 3
+                        : facts.enfrentar_problemas === 'rara_vez' ? 2
+                            : facts.enfrentar_problemas === 'a_veces' ? 1
                                 : 0;
                     const wAuto = facts.baja_autoestima === 'alta' ? 3
                         : facts.baja_autoestima === 'media' ? 2
@@ -149,9 +149,9 @@ export class KnowledgeBase {
                         : facts.concentracion === 'menos' ? 2
                             : facts.concentracion === 'igual' ? 1
                                 : 0;
-                    const wCap = facts.capacidad_decidir === 'nula' ? 3
-                        : facts.capacidad_decidir === 'baja' ? 2
-                            : facts.capacidad_decidir === 'media' ? 1
+                    const wCap = facts.enfrentar_problemas === 'nunca' ? 3
+                        : facts.enfrentar_problemas === 'rara_vez' ? 2
+                            : facts.enfrentar_problemas === 'a_veces' ? 1
                                 : 0;
                     const wAuto = facts.baja_autoestima === 'alta' ? 3
                         : facts.baja_autoestima === 'media' ? 2
@@ -171,9 +171,9 @@ export class KnowledgeBase {
                         : facts.concentracion === 'menos' ? 2
                             : facts.concentracion === 'igual' ? 1
                                 : 0;
-                    const wCap = facts.capacidad_decidir === 'nula' ? 3
-                        : facts.capacidad_decidir === 'baja' ? 2
-                            : facts.capacidad_decidir === 'media' ? 1
+                    const wCap = facts.enfrentar_problemas === 'nunca' ? 3
+                        : facts.enfrentar_problemas === 'rara_vez' ? 2
+                            : facts.enfrentar_problemas === 'a_veces' ? 1
                                 : 0;
                     const wAuto = facts.baja_autoestima === 'alta' ? 3
                         : facts.baja_autoestima === 'media' ? 2
