@@ -20,7 +20,7 @@ export class KnowledgeBase {
                     facts.baja_autoestima === 'alta' &&
                     facts.felicidad === 'nada',
                 actions: result => {
-                    result.estadoEmocional = EstadoEmocional.DEPRESIVO;
+                    result.estadoEmocional = EstadoEmocional.NIVEL6;
                     result.nivelFatiga = NivelFatiga.SEVERO;
                     result.riesgoBurnout = RiesgoBurnout.ALTO;
                 },
@@ -187,7 +187,7 @@ export class KnowledgeBase {
 
             // Estado emocional: preguntas 3, 4, 9, 10, 12 (sentido_utilidad, capacidad_decidir, depresion, desconfianza, felicidad)
             {
-                name: 'Estado Depresivo',
+                name: 'Estado Nivel 6',
                 conditions: facts => {
                     const wUtil = facts.sentido_utilidad === 'mucho' ? 3
                         : facts.sentido_utilidad === 'algo' ? 2
@@ -212,12 +212,12 @@ export class KnowledgeBase {
                     const total = wUtil + wDec + wDep + wDes + wFeli;
                     return total <= 2;
                 },
-                actions: result => { result.estadoEmocional = EstadoEmocional.DEPRESIVO; }
+                actions: result => { result.estadoEmocional = EstadoEmocional.NIVEL6; }
             },
 
-            // Estado Triste (3–5)
+
             {
-                name: 'Estado Triste',
+                name: 'Estado Nivel 5',
                 conditions: facts => {
                     const wUtil = facts.sentido_utilidad === 'mucho' ? 3
                         : facts.sentido_utilidad === 'algo' ? 2
@@ -242,12 +242,12 @@ export class KnowledgeBase {
                     const total = wUtil + wDec + wDep + wDes + wFeli;
                     return total >= 3 && total <= 5;
                 },
-                actions: result => { result.estadoEmocional = EstadoEmocional.TRISTE; }
+                actions: result => { result.estadoEmocional = EstadoEmocional.NIVEL5; }
             },
 
-            // Estado Estresado (6–8)
+            
             {
-                name: 'Estado Estresado',
+                name: 'Estado Nivel 4',
                 conditions: facts => {
                     const wUtil = facts.sentido_utilidad === 'mucho' ? 3
                         : facts.sentido_utilidad === 'algo' ? 2
@@ -272,12 +272,12 @@ export class KnowledgeBase {
                     const total = wUtil + wDec + wDep + wDes + wFeli;
                     return total >= 6 && total <= 8;
                 },
-                actions: result => { result.estadoEmocional = EstadoEmocional.ESTRESADO; }
+                actions: result => { result.estadoEmocional = EstadoEmocional.NIVEL4; }
             },
 
-            // Estado Miedoso (9–10)
+            
             {
-                name: 'Estado Miedoso',
+                name: 'Estado Nivel 3',
                 conditions: facts => {
                     const wUtil = facts.sentido_utilidad === 'mucho' ? 3
                         : facts.sentido_utilidad === 'algo' ? 2
@@ -302,12 +302,12 @@ export class KnowledgeBase {
                     const total = wUtil + wDec + wDep + wDes + wFeli;
                     return total >= 9 && total <= 10;
                 },
-                actions: result => { result.estadoEmocional = EstadoEmocional.MIEDOSO; }
+                actions: result => { result.estadoEmocional = EstadoEmocional.NIVEL3; }
             },
 
-            // Estado Enojado (11)
+            
             {
-                name: 'Estado Enojado',
+                name: 'Estado Nivel 2',
                 conditions: facts => {
                     const wUtil = facts.sentido_utilidad === 'mucho' ? 3
                         : facts.sentido_utilidad === 'algo' ? 2
@@ -332,12 +332,12 @@ export class KnowledgeBase {
                     const total = wUtil + wDec + wDep + wDes + wFeli;
                     return total === 11;
                 },
-                actions: result => { result.estadoEmocional = EstadoEmocional.ENOJADO; }
+                actions: result => { result.estadoEmocional = EstadoEmocional.NIVEL2; }
             },
 
-            // Estado Feliz (12–15)
+            
             {
-                name: 'Estado Feliz',
+                name: 'Estado Nivel 1',
                 conditions: facts => {
                     const wUtil = facts.sentido_utilidad === 'mucho' ? 3
                         : facts.sentido_utilidad === 'algo' ? 2
@@ -362,7 +362,7 @@ export class KnowledgeBase {
                     const total = wUtil + wDec + wDep + wDes + wFeli;
                     return total >= 12;
                 },
-                actions: result => { result.estadoEmocional = EstadoEmocional.FELIZ; }
+                actions: result => { result.estadoEmocional = EstadoEmocional.NIVEL1; }
             }
         ]
     }

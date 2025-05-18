@@ -5,7 +5,7 @@ export class InferenceEngine {
         this.kb = knowledgeBase;
         this.fb = factBase;
         this.result = {
-            estadoEmocional: EstadoEmocional.FELIZ,
+            estadoEmocional: EstadoEmocional.NIVEL1,
             nivelFatiga: NivelFatiga.LEVE,
             riesgoBurnout: RiesgoBurnout.LEVE
         };
