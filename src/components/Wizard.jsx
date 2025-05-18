@@ -82,7 +82,7 @@ export default function Wizard() {
         </nav>
       </form>
 
-     {result && <ResultPanel {...result} />}
+     
      {result && (
        <ResultPanel
          {...result}
