@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { AnimatePresence } from 'framer-motion';
 import ProgressBar from './ProgressBar';
 import Step from './Step';
@@ -38,6 +38,13 @@ export default function Wizard() {
     setResult(null);
     fb.clearAll?.();
   };
+  useEffect(() => {
+  if (result) {
+    document
+      .getElementById('result-panel')
+      ?.scrollIntoView({ behavior: 'smooth' });
+  }
+}, [result]);
 
   const currentQuestion = questions[step];
   const answered = Boolean(answers[currentQuestion.name]);
@@ -109,7 +116,7 @@ export default function Wizard() {
         </nav>
       </form>
 
-      {result && <ResultPanel {...result} />}
+      {result && <ResultPanel id="result-panel" {...result} />}
     </div>
   </>
 );
