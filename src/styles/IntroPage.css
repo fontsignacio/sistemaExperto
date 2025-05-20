@@ -3,7 +3,8 @@ html, body {
   margin: 0;
   padding: 0;
   height: 100%;
-  background-color: #ffffff; /* fondo blanco puro */
+  
+  background:transparent; 
 }
 
 
@@ -13,38 +14,77 @@ html, body {
   align-items: center;
   justify-content: center;
   min-height: 100vh;
-  padding: 20px;
-  background-color: #ffffff;  /* fondo blanco, ya no hay degradado ni manchas */
-}
+  
+  }
 
 .intro-card {
-  background-color: #ffffff;
+  background: rgba(255,255,255,0.7);   /* 70 % opaco */
+  backdrop-filter: blur(10px);         /* desenfoque detrás */
+  -webkit-backdrop-filter: blur(10px); /* soporte Safari */
+
+  /* resto de estilos que ya tenías */
+  padding: 3rem;
+  border-radius: 1.25rem;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.07);
   max-width: 700px;
   width: 100%;
-  padding: 40px;
-  border-radius: 12px;
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+  
   text-align: center;
 }
 
-.intro-card h1 {
-  font-size: 2.5rem;
-  color: #333333;
-  margin-bottom: 16px;
+.intro-card h1{
+  font-size:clamp(2rem,4vw,3rem);      /* fluido */
+  font-weight:800;
+  color:#333;
+  margin-bottom:2rem;
 }
 
-.intro-card p {
-  font-size: 1rem;
-  line-height: 1.6;
-  color: #555555;
-  margin-bottom: 32px;
+/* ------------------------------
+   PÁRRAFOS “lead”
+   ------------------------------ */
+.intro-card .lead{
+  font-size:1.1rem;
+  line-height:1.6;
+  color:#444;
+  margin-bottom:1.5rem;
 }
 
-.buttons {
-  display: flex;
-  justify-content: center;
-  gap: 16px;
-  flex-wrap: wrap;
+/* ------------------------------
+   LISTA DE BENEFICIOS
+   ------------------------------ */
+.intro-card ul{
+  text-align:left;
+  list-style:disc;
+  margin:0 auto 1.5rem;
+  max-width:28rem;
+  padding-left:1.25rem;   /* sangría de viñeta */
+}
+
+.intro-card ul li{
+  margin-bottom:.5rem;
+}
+
+/* ------------------------------
+   NOTA / ADVERTENCIA
+   ------------------------------ */
+.intro-card blockquote{
+  font-size:.95rem;
+  font-style:italic;
+  color:#555;
+  border-left:4px solid #60a5fa;
+  padding-left:.8rem;
+  margin:.5rem auto 0;
+  max-width:26rem;
+}
+
+/* ------------------------------
+   BOTONES
+   ------------------------------ */
+.buttons{
+  display:flex;
+  justify-content:center;
+  gap:2rem;               /* antes 16 px → ahora 2 rem */
+  flex-wrap:wrap;
 }
 
 .btn {

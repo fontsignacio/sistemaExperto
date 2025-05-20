@@ -5,21 +5,27 @@ const IntroPage = ({ onStart }) => (
   <section className="intro-hero">
     <div className="intro-card">
       <h1>Test de Bienestar Emocional y Riesgo de Burnout</h1>
-      <p>
-        Realiza gratuitamente y en solo unos minutos la autoevaluación basada en
-        el cuestionario GHQ-12 (General Health Questionnaire de Goldberg),
-        reconocido internacionalmente para detectar de forma temprana indicios
-        de malestar psicológico y riesgo de burnout. Tus respuestas se analizan
-        al instante mediante nuestro Sistema Experto para Evaluar Bienestar
-        Emocional y Riesgo de Burnout en Trabajadores, que combina las reglas de
-        inferencia clínicas con los puntos de corte validados del GHQ-12 para
-        ofrecerte un resultado claro y personalizado; recuerda, sin embargo, que
-        esta información es puramente orientativa y no sustituye la valoración
-        de un profesional de la salud mental.
-      </p>
+      <p className="lead">
+  Descubre en pocos minutos tu nivel de bienestar emocional y el riesgo de burnout.
+</p>
+
+<p className="lead">
+  Responde 12 preguntas del <strong>GHQ-12 de Goldberg</strong> y nuestro <strong>Sistema Experto</strong> analizará tus respuestas al instante para ofrecerte:
+</p>
+
+<ul>
+  <li><strong>Diagnóstico orientativo</strong> del estado emocional, la fatiga y el riesgo de burnout.</li>
+  <li><strong>Recomendaciones</strong> para mejorar tu bienestar laboral.</li>
+  <li><strong>Informe inmediato</strong> y 100 % confidencial — no guardamos tus datos.</li>
+</ul>
+
+<blockquote>
+  <strong>Nota:</strong> La información resultante es de carácter orientativo y no sustituye la valoración de un profesional de la salud mental.
+</blockquote>
+<break />
       <div className="buttons">
         <button onClick={onStart} className="btn btn-primary">
-          HAZ EL TEST
+          HACER EL TEST
         </button>
         <a
           href="https://drive.google.com/file/d/1xxzLe-6Ov1ZFQKL4MX94U9eufDbqF05Q/view?usp=sharing"

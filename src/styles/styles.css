@@ -20,7 +20,7 @@ html{
 
 body {
   font-family: "Segoe UI", Roboto, sans-serif;
-  background: white;
+  background:transparent; 
   /* Dejamos que la página crezca y sea scrolleable */
   min-height: 100vh;
   display: flex;

@@ -1,0 +1,24 @@
+/* src/styles/gradient-bg.css */
+.animated-bg{
+  /* ocupa toda la ventana */
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+
+  /* detrás de toda la UI */
+  z-index: -1;
+
+  /* gradiente y animación */
+  background: linear-gradient(120deg,
+              #60a5fa, #ed6e38, #ed3443, #a03ced, rgb(42, 244, 42));
+  background-size: 400% 400%;
+  animation: move-bg 15s ease-in-out infinite;
+}
+
+@keyframes move-bg{
+  0%   { background-position: 0% 50%; }
+  50%  { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
