@@ -211,29 +211,29 @@ button:disabled {
 }
 
 /* Colores de estado / fatiga / burnout */
-.estado-feliz,
+.estado-1,
 .fatiga-leve,
 .burnout-leve {
   color: #22c55e;
   font-weight: 700;
 }
-.estado-triste,
-.estado-depresivo {
+.estado-5,
+.estado-6 {
   color: #a855f7;
   font-weight: 700;
 }
-.estado-miedoso,
+.estado-3,
 .fatiga-alto {
   color: #f59e0b;
   font-weight: 700;
 }
-.estado-enojado,
+.estado-4,
 .fatiga-severo,
 .burnout-alto {
   color: #ef4444;
   font-weight: 700;
 }
-.estado-estresado,
+.estado-2,
 .fatiga-moderado {
   color: #fb923c;
   font-weight: 700;

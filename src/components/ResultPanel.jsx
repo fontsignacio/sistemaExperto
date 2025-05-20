@@ -11,7 +11,7 @@ export default function ResultPanel({
 
       <h2>Resultados</h2>
 
-      <p id="estadoSalida" className={`estado-${estadoEmocional.toLowerCase()}`}>
+      <p id="estadoSalida" className={`estado-${estadoEmocional.toLowerCase().substr(6,7)}`}>
         Estado emocional general: {estadoEmocional}
       </p>
 
