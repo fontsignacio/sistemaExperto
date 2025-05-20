@@ -264,6 +264,13 @@ button:disabled {
   }
 }
 
+/* texto de recomendación */
+.recomendacion{
+  margin-top: .25rem;
+  margin-bottom: .75rem;
+}
+
+
 /* Ajuste extra para móviles: separar más las chips */
 .options {
   gap: 30px;

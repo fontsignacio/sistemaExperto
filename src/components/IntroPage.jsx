@@ -22,7 +22,7 @@ const IntroPage = ({ onStart }) => (
 <blockquote>
   <strong>Nota:</strong> La información resultante es de carácter orientativo y no sustituye la valoración de un profesional de la salud mental.
 </blockquote>
-<break />
+<br />
       <div className="buttons">
         <button onClick={onStart} className="btn btn-primary">
           HACER EL TEST
